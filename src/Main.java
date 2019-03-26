@@ -49,6 +49,7 @@ public class Main {
 	double currentySpeed = Double.parseDouble(currentballDetails[4]);
 	
 	double paddlepos = Double.parseDouble(currentPos[1]);
+	System.out.println("Paddle: " + paddlepos);
 	double size = 800-150;
 	double mid = 400-150;
 	// 
