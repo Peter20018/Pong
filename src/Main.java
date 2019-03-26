@@ -14,7 +14,8 @@ public class Main {
 			PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
 			Scanner sc = new Scanner(System.in);
 			String[] logs = new String[4];
-			String[] ballDetails = null;
+			String[] currentballDetails = null;
+			String[] currentPos = null;
 			
 			while(true) {
 				
@@ -24,41 +25,53 @@ public class Main {
 					
 					// Ball = 2
 					if(i == 2) {
-						ballDetails = logs[2].split(" ");
-						
-					}
+						currentballDetails = logs[2].split(" ");
+						currentPos = logs[0].split(" ");
+					}	
 				}
-			
-				MovePaddle(sc, out, ballDetails);
+				MovePaddle(sc, out, currentballDetails, currentPos);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void MovePaddle(Scanner sc, PrintWriter out, String[] ballDetails) {
+	public static void MovePaddle(Scanner sc, PrintWriter out, String[] currentballDetails, String[] currentPos) {
 		
-	System.out.println("Ball x-Position = " + ballDetails[1]);
-	System.out.println("Ball y-Position = " + ballDetails[2]);
-	System.out.println("Ball x-Speed = " + ballDetails[3]);
-	System.out.println("Ball y-Speed = " + ballDetails[4]);
+	System.out.println("Ball x-Position = " + currentballDetails[1]);
+	System.out.println("Ball y-Position = " + currentballDetails[2]);
+	System.out.println("Ball x-Speed = " + currentballDetails[3]);
+	System.out.println("Ball y-Speed = " + currentballDetails[4]);
 	
-	double xSpeed = Double.parseDouble(ballDetails[3]);
-	double ySpeed = Double.parseDouble(ballDetails[4]);
+	double currentxPos = Double.parseDouble(currentballDetails[1]);
+	double currentyPos = Double.parseDouble(currentballDetails[2]);
+	double currentxSpeed = Double.parseDouble(currentballDetails[3]);
+	double currentySpeed = Double.parseDouble(currentballDetails[4]);
 	
-	// System.out.println("Move bidde: ");
+	double paddlepos = Double.parseDouble(currentPos[1]);
+	double size = 800-150;
+	double mid = 400-150;
+	// 
+	System.out.println("Move bidde: ");
 	int moveTo = 0;
 	
-	if(xSpeed > 0) {
-		moveTo = 0;
+	if(currentxSpeed > 0) {
+		if(paddlepos < mid) {
+			moveTo = 18;
+		}
+		else {
+			moveTo = -18;
+		}
 	}
 	else {
-		if(ySpeed < 0) {
+		if(currentyPos > paddlepos+75) {
 			moveTo = 36;
-		} else {
+		}
+		else {
 			moveTo = -36;
 		}
 	}
+	
 	out.println("move " + moveTo);
 	}
 }
